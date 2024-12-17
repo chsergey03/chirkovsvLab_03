@@ -1,0 +1,30 @@
+services:
+  database:
+    image: postgres:latest
+    container_name: online_bank_database
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 11111111
+      POSTGRES_DB: online_bank
+    ports:
+      - "5434:5432"
+    volumes:
+      - database_volume_01:/var/lib/postgresql/data
+
+  app:
+    image: openjdk:17-jdk-alpine
+    container_name: online_bank_app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5434/online_bank
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+    ports:
+      - "8081:8080"
+    depends_on:
+      - database
+
+volumes:
+  database_volume_01:
+    driver: local
