@@ -29,7 +29,7 @@ public class DatabaseTest extends PostgresTestContainer {
 
   @Test
   public void testDatabaseConnection() {
-
+    assertNotNull(userRepository);
   }
 
   @Test
